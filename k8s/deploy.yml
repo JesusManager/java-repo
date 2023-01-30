@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: java-ingress
+  labels:
+    app: java
+    backstage.io/kubernetes-id: java 
+spec:
+  rules:
+    - host: api-java-anderson-dev.empcbr.thoughtworks-labs.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: java
+                port: 
+                  number: 80
+  tls:
+  - hosts:
+    - api-java-anderson-dev.empcbr.thoughtworks-labs.net
+    secretName: letencryptkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java
+  labels:
+    app: java
+    backstage.io/kubernetes-id: java
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: java
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+  labels:
+    app: java
+    backstage.io/kubernetes-id: java
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: java
+  template:
+    metadata:
+      labels:
+        app: java
+    spec:
+      containers:
+      - name: java
+        image: 626109959667.dkr.ecr.us-east-1.amazonaws.com/java:{image-tag}
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,9 @@
+
+site_name: "java"
+site_description: "java"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core

@@ -1,0 +1,23 @@
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "java"
+  description: "java"
+  links:
+    - url: https://api-java-anderson-dev.empcbr.thoughtworks-labs.net/swagger-ui.html
+      title: java
+      icon: dashboard
+  annotations:
+    circleci.com/project-slug: github/platform-dx/java-repo
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug:  platform-dx/java-repo
+    sonarqube.org/project-key: "java"
+    backstage.io/kubernetes-label-selector: "app=java"
+    backstage.io/adr-location: docs/adrs/
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "anderson"
+  providesApis:
+    - "java"
